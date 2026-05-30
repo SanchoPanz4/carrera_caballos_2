@@ -152,6 +152,9 @@
     t3.detach();
     t4.detach();
     t5.detach();
+    while(t1.joinable() ||   t2.joinable()||   t3.joinable()||    t4.joinable()||    t5.joinable())//no pare mientras esten corriendo
+    {}
+    
 }
 
     }; // contiene el loop de la carrera , al final ordena en orden de llegada a los caballos.
