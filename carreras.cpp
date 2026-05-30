@@ -192,6 +192,7 @@
                 caballo_que_corre.posicion_x++;   // Actualizacion de posicion Caballo x
                 mover_caballo(caballo_que_corre); // mueve Caballo
             }
+        usleep(50*1000); // sleep por 50 ms
         }
         return ;
     }
