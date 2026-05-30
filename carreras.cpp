@@ -143,40 +143,15 @@
 
     int vigilante = 0;  //Vigila quien va en primer lugar 
     std::thread t1(&hipodromo::carrera_hilo,this,caballos[0]); //constructor es: (funcion que va a andar, objeto en el que va andar, argumentos)
+    std::thread t2(&hipodromo::carrera_hilo,this,caballos[1]); //constructor es: (funcion que va a andar, objeto en el que va andar, argumentos)
+    std::thread t3(&hipodromo::carrera_hilo,this,caballos[2]); //constructor es: (funcion que va a andar, objeto en el que va andar, argumentos)
+    std::thread t4(&hipodromo::carrera_hilo,this,caballos[3]); //constructor es: (funcion que va a andar, objeto en el que va andar, argumentos)
+    std::thread t5(&hipodromo::carrera_hilo,this,caballos[4]); //constructor es: (funcion que va a andar, objeto en el que va andar, argumentos)
     t1.detach();
-    while(t1.joinable())
-    {
-//        for(int i=0;i<n_caballos;i++)//revisa quien va adelante
-//        {
-//            if(caballos[i].posicion_x>vigilante)
-//            {
-//                vigilante = caballos[i].posicion_x;//toma pos de Caballo mas adelante
-//                gana=i;//posicion de caballo en el arreglo de quien gana
-//            }
-//        }
-//         
-//        for(int i=0;i<n_caballos;i++)//lanza el "dado" para ver quien avanza
-//        {
-//            int random =(rand()%100)+1;
-//            if(random<=caballos[i].suerte)
-//            {
-//                caballos[i].posicion_x++;   //Actualizacion de posicion Caballo x
-//                mover_caballo(caballos[i]); // mueve Caballo
-//            }
-//       }
-        
-
-
-
-        wrefresh(pista);
-        //refresh();
-#ifdef _WIN32
-        Sleep(50); 
-#endif
-#ifdef __linux__
-       usleep(50*1000); // sleep por 50 ms
-#endif
-    }
+    t2.detach();
+    t3.detach();
+    t4.detach();
+    t5.detach();
 }
 
     }; // contiene el loop de la carrera , al final ordena en orden de llegada a los caballos.
@@ -194,7 +169,7 @@
                 mover_caballo(caballo_que_corre); // mueve Caballo
                 wrefresh(pista);
             }
-        std::this_thread::sleep_for(std::chrono::milliseconds(50*1000));
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
         }
         return ;
     }
