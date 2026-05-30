@@ -8,6 +8,7 @@
 #include <cstdlib>          //Uso de Rand
 #include <ctime>
 #include <thread> //uso de thread de c++ en vez de pthreads para mejor compatibilidad con las clases 
+#include <chrono>
 
 	hipodromo::hipodromo(int pos_y_ingreso,int pos_x_ingreso, Caballo caballos_ingreso[5])
     {
@@ -192,7 +193,7 @@
                 caballo_que_corre.posicion_x++;   // Actualizacion de posicion Caballo x
                 mover_caballo(caballo_que_corre); // mueve Caballo
             }
-        usleep(50*10000); // sleep por 50 ms
+        std::this_thread::sleep_for(std::chrono::milliseconds(50*1000));
         }
         return ;
     }
