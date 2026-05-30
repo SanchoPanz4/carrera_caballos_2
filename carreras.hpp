@@ -18,6 +18,7 @@ class hipodromo{
 	int pos_y;//posicion ventana
 	int largo_y;
 	int largo_x;
+	bool mutex_caballo;
 	WINDOW *pista;
 	int pos_llegada_x;
 
