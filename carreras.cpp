@@ -7,6 +7,7 @@
 #endif
 #include <cstdlib>          //Uso de Rand
 #include <ctime>
+#include <thread> //uso de thread de c++ en vez de pthreads para mejor compatibilidad con las clases 
 
 	hipodromo::hipodromo(int pos_y_ingreso,int pos_x_ingreso, Caballo caballos_ingreso[5])
     {
@@ -140,32 +141,32 @@
     wrefresh(pista);
 
     int vigilante = 0;  //Vigila quien va en primer lugar 
-
-
-    //Posiciona los caballos
-   
-
-    while(vigilante!=pos_llegada_x)
+    std::thread t1(&hipodromo::carrera_hilo,this,caballos[0]); //constructor es: (funcion que va a andar, objeto en el que va andar, argumentos)
+    t1.detach();
+    while(t1.joinable())
     {
-        for(int i=0;i<n_caballos;i++)//revisa quien va adelante
-        {
-            if(caballos[i].posicion_x>vigilante)
-            {
-                vigilante = caballos[i].posicion_x;//toma pos de Caballo mas adelante
-                gana=i;//posicion de caballo en el arreglo de quien gana
-            }
-        }
-         
-        for(int i=0;i<n_caballos;i++)//lanza el "dado" para ver quien avanza
-        {
-            int random =(rand()%100)+1;
-            if(random<=caballos[i].suerte)
-            {
-                caballos[i].posicion_x++;   //Actualizacion de posicion Caballo x
-                mover_caballo(caballos[i]); // mueve Caballo
-            }
-        }
+//        for(int i=0;i<n_caballos;i++)//revisa quien va adelante
+//        {
+//            if(caballos[i].posicion_x>vigilante)
+//            {
+//                vigilante = caballos[i].posicion_x;//toma pos de Caballo mas adelante
+//                gana=i;//posicion de caballo en el arreglo de quien gana
+//            }
+//        }
+//         
+//        for(int i=0;i<n_caballos;i++)//lanza el "dado" para ver quien avanza
+//        {
+//            int random =(rand()%100)+1;
+//            if(random<=caballos[i].suerte)
+//            {
+//                caballos[i].posicion_x++;   //Actualizacion de posicion Caballo x
+//                mover_caballo(caballos[i]); // mueve Caballo
+//            }
+//       }
         
+
+
+
         wrefresh(pista);
         //refresh();
 #ifdef _WIN32
@@ -178,3 +179,19 @@
 }
 
     }; // contiene el loop de la carrera , al final ordena en orden de llegada a los caballos.
+
+    void hipodromo::carrera_hilo(Caballo caballo_que_corre)
+    {
+        srand(time(NULL) * (int)caballo_que_corre.caracter); // Valor semilla sea distinto por cada caballo
+
+        int random = (rand() % 100) + 1;
+        while (caballo_que_corre.posicion_x != pos_llegada_x)
+        {
+            if (random <= caballo_que_corre.suerte) // si l
+            {
+                caballo_que_corre.posicion_x++;   // Actualizacion de posicion Caballo x
+                mover_caballo(caballo_que_corre); // mueve Caballo
+            }
+        }
+        return ;
+    }

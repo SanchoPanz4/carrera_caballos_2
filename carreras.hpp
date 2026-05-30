@@ -38,7 +38,7 @@ class hipodromo{
 	//comenzar carrera
 	void carrera(); //contiene el loop de la carrera , al final ordena en orden de llegada a los caballos.
 	
-
+	void carrera_hilo(Caballo caballo_que_corre);
 
 
 	
