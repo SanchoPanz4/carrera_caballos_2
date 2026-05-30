@@ -1,4 +1,5 @@
 #include <curses.h>
+#include <mutex>
 
 class Caballo{
 
@@ -18,6 +19,7 @@ class hipodromo{
 	int pos_y;//posicion ventana
 	int largo_y;
 	int largo_x;
+	std::mutex mutex_caballo; //declaramos un mutex para evitar choques a la hora de mover el caballo
 	WINDOW *pista;
 	int pos_llegada_x;
 

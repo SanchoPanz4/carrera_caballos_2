@@ -169,8 +169,10 @@
             if (random <= caballo_que_corre.suerte) // si l
             {
                 caballo_que_corre.posicion_x++;   // Actualizacion de posicion Caballo x
+                mutex_caballo.lock(); //se bloquea acceso a las funciones para evitar que cada caballo intente imprimir en pantalla al mismo tiempo
                 mover_caballo(caballo_que_corre); // mueve Caballo
                 wrefresh(pista);
+                mutex_caballo.unlock();
             }
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
         }
