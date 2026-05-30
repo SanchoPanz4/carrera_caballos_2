@@ -192,6 +192,7 @@
             {
                 caballo_que_corre.posicion_x++;   // Actualizacion de posicion Caballo x
                 mover_caballo(caballo_que_corre); // mueve Caballo
+                wrefresh(pista);
             }
         std::this_thread::sleep_for(std::chrono::milliseconds(50*1000));
         }
