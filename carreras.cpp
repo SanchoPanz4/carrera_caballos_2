@@ -174,9 +174,10 @@
     {
         srand(time(NULL) * (int)caballo_que_corre.caracter); // Valor semilla sea distinto por cada caballo
 
-        int random = (rand() % 100) + 1;
+       
         while (caballo_que_corre.posicion_x != pos_llegada_x)
         {
+             int random = (rand() % 100) + 1;
             if (random <= caballo_que_corre.suerte) // si l
             {
                 caballo_que_corre.posicion_x++;   // Actualizacion de posicion Caballo x
