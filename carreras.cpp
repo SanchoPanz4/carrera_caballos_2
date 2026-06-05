@@ -10,35 +10,34 @@
 #include <thread> //uso de thread de c++ en vez de pthreads para mejor compatibilidad con las clases 
 #include <chrono>
 
+
 	hipodromo::hipodromo(int pos_y_ingreso,int pos_x_ingreso, Caballo caballos_ingreso[5])
     {
+        //valores minimos x e y
         largo_x=10;
-        largo_y=11;//valores minimos x e y
+        largo_y=11;
+
         pos_x=pos_x_ingreso;
         pos_y=pos_y_ingreso;
+        
         pista=newwin(largo_y,largo_x,pos_y,pos_x);//se crea ventana 
         refresh();
         box(pista,0,0);
         wrefresh(pista);//muestra pista
-        for(int i=0;i<5;i++)
+        for(int i=0;i<7;i++)
         {
-        caballos[i]=caballos_ingreso[i];
+            caballos[i]=caballos_ingreso[i];
         }
-        n_caballos=5;//comienza con 5 por defecto
+        n_caballos=7;//comienza con 7 por defecto
         pos_llegada_x=getmaxx(pista)-2;//llegada por defecto es el anterior a llegar al borde
 
-    };//constructor, toma arreglo 5 caballos y posicion de hipodromo en pantalla
+    };//constructor, toma arreglo 7 caballos y posicion de hipodromo en pantalla
     std::vector<Caballo> hipodromo::ganador(){
         return ganadores;
     };
 	//modificar cantidad caballos
 	void hipodromo:: mod_caballo_cantidad(int nuevo_n){
-        
         n_caballos=nuevo_n; //numero de caballos a mostrar
-        //cambiar largo y pista:
-
-
-
     };
 	//modificar tamaño pista
     
@@ -117,21 +116,24 @@
     mvwprintw(pista,caballo_que_se_mueve.posicion_y,caballo_que_se_mueve.posicion_x-1," ");  //borrado de paso de x por la pista
 
     };
+
+
     // comenzar carrera
-    void hipodromo::carrera() {
+void hipodromo::carrera() {
 {
     wclear(pista);
     box(pista,0,0);
     wrefresh(pista);
-    for(int i=0;i<5;i++)
+    std::vector<std::thread> threads;
+    //Imprime los caballos en su posicion inicial
+    for(int i=0;i<n_caballos;i++)
     {
         caballos[i].posicion_x = 1;
     }
 
-    srand(time(NULL));
-        
-    //hipodromo mi_hipodromo;
     noecho(); //No retorno al pulsar tecla
+
+    //Imprime lineas de pista
     for(int i=2;i<largo_y;i=i+2)
     {
         for(int j=1;j<largo_x-1;j++)
@@ -139,64 +141,73 @@
             mvwprintw(pista,i,j,"-");
         }
     }
-    //refresh();
     wrefresh(pista);
-
-    int vigilante = 0;  //Vigila quien va en primer lugar 
-    std::thread t1(&hipodromo::carrera_hilo,this,caballos[0]); //constructor es: (funcion que va a andar, objeto en el que va andar, argumentos)
-    std::thread t2(&hipodromo::carrera_hilo,this,caballos[1]); //constructor es: (funcion que va a andar, objeto en el que va andar, argumentos)
-    std::thread t3(&hipodromo::carrera_hilo,this,caballos[2]); //constructor es: (funcion que va a andar, objeto en el que va andar, argumentos)
-    std::thread t4(&hipodromo::carrera_hilo,this,caballos[3]); //constructor es: (funcion que va a andar, objeto en el que va andar, argumentos)
-    std::thread t5(&hipodromo::carrera_hilo,this,caballos[4]); //constructor es: (funcion que va a andar, objeto en el que va andar, argumentos)
-    //para que corran los 5 paralelos
-    //t1.detach();
-    //t2.detach();
-    //t3.detach();
-    //t4.detach();
-    //t5.detach();
+    threads.reserve(7);
+    for (int i = 0; i < n_caballos; i++)
+    {
+        threads.push_back(std::thread(&hipodromo::carrera_hilo,this,caballos[i]));
+    }
+    for (int i = 0; i < n_caballos; i++)
+    {
+        if(threads.at(i).joinable())
+        {   
+            threads.at(i).join();
+        }
+    }
+    
+    //Threads de cada caballo
+    // std::thread t1(&hipodromo::carrera_hilo,this,caballos[0]); //constructor es: (funcion que va a andar, objeto en el que va andar, argumentos)
+    // std::thread t2(&hipodromo::carrera_hilo,this,caballos[1]); //constructor es: (funcion que va a andar, objeto en el que va andar, argumentos)
+    // std::thread t3(&hipodromo::carrera_hilo,this,caballos[2]); //constructor es: (funcion que va a andar, objeto en el que va andar, argumentos)
+    // std::thread t4(&hipodromo::carrera_hilo,this,caballos[3]); //constructor es: (funcion que va a andar, objeto en el que va andar, argumentos)
+    // std::thread t5(&hipodromo::carrera_hilo,this,caballos[4]); //constructor es: (funcion que va a andar, objeto en el que va andar, argumentos)
+    // std::thread t6(&hipodromo::carrera_hilo,this,caballos[5]); //constructor es: (funcion que va a andar, objeto en el que va andar, argumentos)
+    // std::thread t7(&hipodromo::carrera_hilo,this,caballos[6]); //constructor es: (funcion que va a andar, objeto en el que va andar, argumentos)
 
    //no salir de la carrera hasta que todos los caballos terminen de correr
-    if(t1.joinable())
-            t1.join();
-    if(t2.joinable())
-            t2.join();
-    if(t3.joinable())
-            t3.join();
-    if(t4.joinable())
-            t4.join();
-    if(t5.joinable())
-            t5.join();
-
-}
-
-    }; // contiene el loop de la carrera , al final ordena en orden de llegada a los caballos.
-
-    void hipodromo::carrera_hilo(Caballo caballo_que_corre)
-    {
-        srand(time(NULL) * (int)caballo_que_corre.caracter); // Valor semilla sea distinto por cada caballo
-
-       
-        while (caballo_que_corre.posicion_x != pos_llegada_x)
-        {
-             int random = (rand() % 100) + 1;
-            if (random <= caballo_que_corre.suerte) // si l
-            {
-                caballo_que_corre.posicion_x++;   // Actualizacion de posicion Caballo x
-                mutex_caballo.lock(); //se bloquea acceso a las funciones para evitar que cada caballo intente imprimir en pantalla al mismo tiempo
-                mover_caballo(caballo_que_corre); // mueve Caballo
-                wrefresh(pista);
-                mutex_caballo.unlock();
-            }
-        std::this_thread::sleep_for(std::chrono::milliseconds(50));
-        }
-	//mutex para que accedan uno a la vez a arreglo de ganadores
-	//como es semaforo binario el orden se mantiene 
-	//porque tiene una fila
-	mutex_ganadores.lock();
-	ganadores.push_back(caballo_que_corre);
-	mutex_ganadores.unlock();
-        return ;
+    // if(t1.joinable())
+    //         t1.join();
+    // if(t2.joinable())
+    //         t2.join();
+    // if(t3.joinable())
+    //         t3.join();
+    // if(t4.joinable())
+    //         t4.join();
+    // if(t5.joinable())
+    //         t5.join();
+    // if(t6.joinable())
+    //         t6.join();
+    // if(t7.joinable())
+    //         t7.join();
     }
+};
+
+
+void hipodromo::carrera_hilo(Caballo caballo_que_corre)
+{
+srand(time(NULL) * (int)caballo_que_corre.caracter); // Valor semilla sea distinto por cada caballo
+    
+while (caballo_que_corre.posicion_x != pos_llegada_x)
+{
+    int random = (rand() % 100) + 1;
+    if (random <= caballo_que_corre.suerte)
+    {
+        caballo_que_corre.posicion_x++;     // Actualizacion de posicion Caballo x
+        mutex_caballo.lock();               //se bloquea acceso a las funciones para evitar que cada caballo intente imprimir en pantalla al mismo tiempo
+        mover_caballo(caballo_que_corre);   // mueve Caballo
+        wrefresh(pista);
+        mutex_caballo.unlock();
+    }
+std::this_thread::sleep_for(std::chrono::milliseconds(50));
+}
+//mutex para que accedan uno a la vez a arreglo de ganadores
+//como es semaforo binario el orden se mantiene 
+//porque tiene una fila
+mutex_ganadores.lock();
+ganadores.push_back(caballo_que_corre);
+mutex_ganadores.unlock();
+    return ;
+}
 
 void hipodromo:: limpiar_ganadores()
 {

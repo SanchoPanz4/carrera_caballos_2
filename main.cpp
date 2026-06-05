@@ -371,8 +371,8 @@ int altura_titulo = 10;//altura titulo se va a usar de referencia para coordenad
     refresh();
     wrefresh(menuwin);
     
-  Caballo arreglo_caballos[5];
-    for(int i=0;i<5;i++)
+  Caballo arreglo_caballos[7];
+    for(int i=0;i<7;i++)
     {
         arreglo_caballos[i].caracter = 65+i;//letras mayusculas como caracter de cabballo
         arreglo_caballos[i].posicion_x = 1;
