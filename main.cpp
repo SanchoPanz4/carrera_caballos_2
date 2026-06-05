@@ -379,6 +379,7 @@ int altura_titulo = 10;//altura titulo se va a usar de referencia para coordenad
         arreglo_caballos[i].posicion_y = i*2+1;
         arreglo_caballos[i].suerte = 50;
     }
+    
     hipodromo hipo((altura_titulo+2+8)+2,5,arreglo_caballos);
     
 
@@ -390,7 +391,6 @@ int altura_titulo = 10;//altura titulo se va a usar de referencia para coordenad
     int highlight = 0;
     WINDOW * resultado = newwin(10, 40, (altura_titulo+2+8)+2+15,5); // ventana que imprime resultado
     
-
     while(1){
         box(menuwin,0,0);
 
