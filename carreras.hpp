@@ -17,6 +17,7 @@ class hipodromo{
 	int n_caballos;
 	int pos_x;//posicion de la ventana
 	int pos_y;//posicion ventana
+	int largo_x;
 	int largo_y;
 	std::mutex mutex_caballo; //declaramos un mutex para evitar choques a la hora de mover el caballo
 	WINDOW *pista;
@@ -25,7 +26,6 @@ class hipodromo{
 	std::vector<Caballo> ganadores;//arreglo dinamico que va a guardar caballos
     public:
 	
-	int largo_x;
 	Caballo caballos[5];
 	hipodromo(int pos_y,int pos_x, Caballo caballos_ingreso[5]);//constructor, toma arreglo 5 caballos y posicion de hipodromo en pantalla
 	std::vector<Caballo> ganador();//devuelve el vector entero de ganadores

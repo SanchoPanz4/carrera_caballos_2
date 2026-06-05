@@ -48,24 +48,24 @@
         bool loop = true;
         while(loop)
         {
-        int input=(int)wgetch(pista);
-        switch (input)
-        {
-        case KEY_LEFT:
-            quitar_largo(); // quita un largo
-            break;
-        case KEY_RIGHT:
-            add_largo();
-            break; // añade un largo
-        case 'E'://valor ascii E
-            loop = false;
-            break;
-        case 'e'://valor ascii e
-            loop = false;
-            break;
-        default:
-            break;
-        }
+            int input=(int)wgetch(pista);
+            switch (input)
+            {
+                case KEY_LEFT:
+                    quitar_largo(); // quita un largo
+                    break;
+                case KEY_RIGHT:
+                    add_largo();
+                    break; // añade un largo
+                case 'E'://valor ascii E
+                    loop = false;
+                    break;
+                case 'e'://valor ascii e
+                    loop = false;
+                    break;
+                default:
+                    break;
+            }
         }
         keypad(pista,false);//desactiva flechas pista
         return largo_x;
@@ -82,7 +82,7 @@
             wclear(pista);//limpia la linea que queda atras
             wrefresh(pista);
             box(pista,0,0);
-
+            
             wrefresh(pista);//aparece caja
 
         }
