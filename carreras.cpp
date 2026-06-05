@@ -11,11 +11,13 @@
 #include <chrono>
 
 
-	hipodromo::hipodromo(int pos_y_ingreso,int pos_x_ingreso, Caballo caballos_ingreso[5])
+	hipodromo::hipodromo(int pos_y_ingreso,int pos_x_ingreso, Caballo caballos_ingreso[7])
     {
+        n_caballos=7;//comienza con 7 por defecto
+        
         //valores minimos x e y
         largo_x=10;
-        largo_y=11;
+        largo_y=n_caballos*2+1;
 
         pos_x=pos_x_ingreso;
         pos_y=pos_y_ingreso;
@@ -24,11 +26,11 @@
         refresh();
         box(pista,0,0);
         wrefresh(pista);//muestra pista
-        for(int i=0;i<7;i++)
+        for(int i=0;i<n_caballos;i++)
         {
             caballos[i]=caballos_ingreso[i];
         }
-        n_caballos=7;//comienza con 7 por defecto
+        
         pos_llegada_x=getmaxx(pista)-2;//llegada por defecto es el anterior a llegar al borde
 
     };//constructor, toma arreglo 7 caballos y posicion de hipodromo en pantalla
