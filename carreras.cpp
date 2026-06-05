@@ -19,7 +19,6 @@
         largo_x=10;
         largo_y=n_caballos*2+1;
 
-        largo_y=11;
 	    vueltas_a_correr=1;
         pos_x=pos_x_ingreso;
         pos_y=pos_y_ingreso;
