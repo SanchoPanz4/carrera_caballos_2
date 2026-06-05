@@ -373,6 +373,21 @@ void vueltas_carreras(hipodromo &hipo_){
 
 }
 
+void estado_carrera (hipodromo &hipo_) {
+    WINDOW * resultado = newwin(10, 40, (10+2+8)+2+15,5); // ventana que imprime resultado
+    std::vector<Caballo> mostrar_ganadores= hipo_.ganador();
+            wclear(resultado);
+            wrefresh(resultado);
+            for(Caballo caballo_puesto: mostrar_ganadores)//es como el foreach de c# 
+            {
+                mvwprintw(resultado,g,1,"Caballo puesto %d: %c",g,caballo_puesto.caracter);
+                g++;
+            }
+            box(resultado,0,0);
+            wrefresh(resultado);
+            hipo_.limpiar_ganadores();//limpia vector para la siguiente carrera
+}
+
 int main()
 {
     initscr();               //iniciar curses
@@ -432,7 +447,7 @@ int altura_titulo = 10;//altura titulo se va a usar de referencia para coordenad
     string choices [4] = {"Competir", "Editar Caballo", "Editar Hipodromo", "Salir"};
     int choice;
     int highlight = 0;
-    WINDOW * resultado = newwin(10, 40, (altura_titulo+2+8)+2+15,5); // ventana que imprime resultado
+    //WINDOW * resultado = newwin(10, 40, (altura_titulo+2+8)+2+15,5); // ventana que imprime resultado
     
     while(1){
         box(menuwin,0,0);
@@ -465,17 +480,18 @@ int altura_titulo = 10;//altura titulo se va a usar de referencia para coordenad
 		    {
 	    vueltas_carreras(hipo);
             hipo.carrera();
-            std::vector<Caballo> mostrar_ganadores= hipo.ganador();
-            wclear(resultado);
-            wrefresh(resultado);
-            for(Caballo caballo_puesto: mostrar_ganadores)//es como el foreach de c# 
-            {
-                mvwprintw(resultado,g,1,"Caballo puesto %d: %c",g,caballo_puesto.caracter);
-                g++;
-            }
-            box(resultado,0,0);
-            wrefresh(resultado);
-            hipo.limpiar_ganadores();//limpia vector para la siguiente carrera
+            estado_carrera(hipo);
+            //std::vector<Caballo> mostrar_ganadores= hipo.ganador();
+            //wclear(resultado);
+            //wrefresh(resultado);
+            //for(Caballo caballo_puesto: mostrar_ganadores)//es como el foreach de c# 
+            //{
+            //    mvwprintw(resultado,g,1,"Caballo puesto %d: %c",g,caballo_puesto.caracter);
+            //    g++;
+            //}
+            //box(resultado,0,0);
+            //wrefresh(resultado);
+            //hipo.limpiar_ganadores();//limpia vector para la siguiente carrera
             break;
             }
                 
