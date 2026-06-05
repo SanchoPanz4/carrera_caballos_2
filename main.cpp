@@ -418,38 +418,37 @@ int altura_titulo = 10;//altura titulo se va a usar de referencia para coordenad
 	int g=1;//empezar a contar puestos caballos desde el 1
         if (choice == 10){
             switch (highlight){
-                case 0:
+            case 0:
 		    {
-                hipo.carrera();
-
-		std::vector<Caballo> mostrar_ganadores= hipo.ganador();
-		for(Caballo caballo_puesto: mostrar_ganadores)//es como el foreach de c# 
-		{
-		    mvwprintw(resultado,g,1,"Caballo puesto %d: %c",g,caballo_puesto.caracter);
-		    g++;
-		}
-                wclear(resultado);
-                wrefresh(resultado);
-                box(resultado,0,0);
-                wrefresh(resultado);
-		        hipo.limpiar_ganadores();//limpia vector para la siguiente carrera
-                break;
-		    }
+            hipo.carrera();
+            std::vector<Caballo> mostrar_ganadores= hipo.ganador();
+            wclear(resultado);
+            wrefresh(resultado);
+            for(Caballo caballo_puesto: mostrar_ganadores)//es como el foreach de c# 
+            {
+                mvwprintw(resultado,g,1,"Caballo puesto %d: %c",g,caballo_puesto.caracter);
+                g++;
+            }
+            box(resultado,0,0);
+            wrefresh(resultado);
+            hipo.limpiar_ganadores();//limpia vector para la siguiente carrera
+            break;
+            }
                 
 		case 1:
 		editar_caballos(hipo);
 		break;
                 
-                case 2:
-                editar_hipodromo(hipo);
-                break;
+        case 2:
+        editar_hipodromo(hipo);
+        break;
                 
-                case 3:
-                endwin();
-                return 0;
-            }
+        case 3:
+        endwin();
+        return 0;
         }
     }
+}
 
 
 
