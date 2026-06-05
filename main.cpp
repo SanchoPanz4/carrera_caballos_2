@@ -3,22 +3,21 @@
 #include "carreras.hpp"
 
 using namespace std;
+
 void editar_caballos(hipodromo &hipo_);
 void editar_hipodromo(hipodromo &hipo_);
 void editar_largo_pista(int &largo_pista,hipodromo &hipo_);
 void editar_cantidad_caballos(hipodromo &hipo_);
 void editar_suerte_caballos(hipodromo &hipo_);
 void editar_valor_suerte(int Caballo, hipodromo &hipo_);
+void vueltas_carreras(hipodromo &hipo_, int vueltas);
 
 void editar_hipodromo(hipodromo &hipo_)
 {
-    //clear();
     box(stdscr, 0, 0);
 
     int yMax, xMax;
     getmaxyx(stdscr, yMax, xMax);
-
-    //mvprintw(2, (xMax - 16) / 2, "EDITAR PISTA");
 
     int ancho = 50;
     WINDOW * menuwin = newwin(8, xMax-10 , 12, 5);
@@ -333,6 +332,53 @@ void editar_valor_suerte(int Caballo,hipodromo &hipo_)
     }
 }
 
+void vueltas_carreras(hipodromo &hipo_){
+
+    //clear();
+    box(stdscr, 0, 0);
+
+    int yMax, xMax;
+    getmaxyx(stdscr, yMax, xMax);
+
+
+    WINDOW * menuwin = newwin(8, 40, 12, (xMax - 40) / 2);
+    keypad(menuwin, true);
+
+    int vueltas = 1;//por defecto la vuelta es 1
+    int choice;
+
+    while (1)
+    {
+        werase(menuwin);
+        box(menuwin, 0, 0);
+
+        string texto2 = "Vueltas a correr: " + to_string(vueltas);
+
+        mvwprintw(menuwin, 4, (40 - texto2.length()) / 2, texto2.c_str());
+
+        wrefresh(menuwin);
+        choice = wgetch(menuwin);
+
+        switch (choice)
+        {
+        case KEY_LEFT:
+            if (vueltas > 1) vueltas--;
+            break;
+
+        case KEY_RIGHT:
+            if (vueltas < 100) vueltas++;
+            break;
+
+        case 10:
+            hipo_.mod_vueltas(vueltas); //se guardan vueltas
+            return; //corre carrera
+        }
+    }
+
+
+
+}
+
 int main()
 {
     initscr();               //iniciar curses
@@ -357,6 +403,7 @@ int main()
 " | |___ / ___ \\| |_) / ___ \\| |___| |__| |_| |___) |",
 "  \\____/_/   \\_\\____/_/   \\_\\_____|_____\\___/|____/ "
 };
+
 int altura_titulo = 10;//altura titulo se va a usar de referencia para coordenadas de todo
 
     attron(A_BOLD);
@@ -371,7 +418,8 @@ int altura_titulo = 10;//altura titulo se va a usar de referencia para coordenad
     refresh();
     wrefresh(menuwin);
     
-  Caballo arreglo_caballos[7];
+    //Llenado de los 7 caballos
+    Caballo arreglo_caballos[7];
     for(int i=0;i<7;i++)
     {
         arreglo_caballos[i].caracter = 65+i;//letras mayusculas como caracter de cabballo
@@ -380,6 +428,7 @@ int altura_titulo = 10;//altura titulo se va a usar de referencia para coordenad
         arreglo_caballos[i].suerte = 50;
         arreglo_caballos[i].metros_recorridos = 0;
     }
+    
     hipodromo hipo((altura_titulo+2+8)+2,5,arreglo_caballos);
     
 
@@ -389,9 +438,8 @@ int altura_titulo = 10;//altura titulo se va a usar de referencia para coordenad
     string choices [4] = {"Competir", "Editar Caballo", "Editar Hipodromo", "Salir"};
     int choice;
     int highlight = 0;
-    WINDOW * resultado = newwin (10, 40, (altura_titulo+2+8)+2+15,5); // ventana que imprime resultado
+    WINDOW * resultado = newwin(10, 40, (altura_titulo+2+8)+2+15,5); // ventana que imprime resultado
     
-
     while(1){
         box(menuwin,0,0);
 
@@ -421,6 +469,7 @@ int altura_titulo = 10;//altura titulo se va a usar de referencia para coordenad
             switch (highlight){
             case 0:
 		    {
+	    vueltas_carreras(hipo);
             hipo.carrera();
             std::vector<Caballo> mostrar_ganadores= hipo.ganador();
             wclear(resultado);

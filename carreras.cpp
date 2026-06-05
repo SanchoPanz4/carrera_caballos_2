@@ -11,12 +11,16 @@
 #include <chrono>
 
 
-	hipodromo::hipodromo(int pos_y_ingreso,int pos_x_ingreso, Caballo caballos_ingreso[5])
+	hipodromo::hipodromo(int pos_y_ingreso,int pos_x_ingreso, Caballo caballos_ingreso[7])
     {
+        n_caballos=7;//comienza con 7 por defecto
+        
         //valores minimos x e y
         largo_x=10;
-        largo_y=11;
+        largo_y=n_caballos*2+1;
 
+        largo_y=11;
+	    vueltas_a_correr=1;
         pos_x=pos_x_ingreso;
         pos_y=pos_y_ingreso;
         
@@ -24,11 +28,11 @@
         refresh();
         box(pista,0,0);
         wrefresh(pista);//muestra pista
-        for(int i=0;i<7;i++)
+        for(int i=0;i<n_caballos;i++)
         {
             caballos[i]=caballos_ingreso[i];
         }
-        n_caballos=7;//comienza con 7 por defecto
+        
         pos_llegada_x=getmaxx(pista)-2;//llegada por defecto es el anterior a llegar al borde
 
     };//constructor, toma arreglo 7 caballos y posicion de hipodromo en pantalla
@@ -118,7 +122,7 @@
 
 
     // comenzar carrera
-void hipodromo::carrera() {
+void hipodromo::carrera()
 {
     wclear(pista);
     box(pista,0,0);
@@ -153,40 +157,14 @@ void hipodromo::carrera() {
             threads.at(i).join();
         }
     }
-    
-    //Threads de cada caballo
-    // std::thread t1(&hipodromo::carrera_hilo,this,caballos[0]); //constructor es: (funcion que va a andar, objeto en el que va andar, argumentos)
-    // std::thread t2(&hipodromo::carrera_hilo,this,caballos[1]); //constructor es: (funcion que va a andar, objeto en el que va andar, argumentos)
-    // std::thread t3(&hipodromo::carrera_hilo,this,caballos[2]); //constructor es: (funcion que va a andar, objeto en el que va andar, argumentos)
-    // std::thread t4(&hipodromo::carrera_hilo,this,caballos[3]); //constructor es: (funcion que va a andar, objeto en el que va andar, argumentos)
-    // std::thread t5(&hipodromo::carrera_hilo,this,caballos[4]); //constructor es: (funcion que va a andar, objeto en el que va andar, argumentos)
-    // std::thread t6(&hipodromo::carrera_hilo,this,caballos[5]); //constructor es: (funcion que va a andar, objeto en el que va andar, argumentos)
-    // std::thread t7(&hipodromo::carrera_hilo,this,caballos[6]); //constructor es: (funcion que va a andar, objeto en el que va andar, argumentos)
-
-   //no salir de la carrera hasta que todos los caballos terminen de correr
-    // if(t1.joinable())
-    //         t1.join();
-    // if(t2.joinable())
-    //         t2.join();
-    // if(t3.joinable())
-    //         t3.join();
-    // if(t4.joinable())
-    //         t4.join();
-    // if(t5.joinable())
-    //         t5.join();
-    // if(t6.joinable())
-    //         t6.join();
-    // if(t7.joinable())
-    //         t7.join();
-    }
 };
 
 
 void hipodromo::carrera_hilo(Caballo caballo_que_corre)
 {
 srand(time(NULL) * (int)caballo_que_corre.caracter); // Valor semilla sea distinto por cada caballo
-    
-while (caballo_que_corre.posicion_x != pos_llegada_x)
+    int vueltas_corridas=0;
+while (vueltas_corridas< vueltas_a_correr)//mientras no haya cumplido las vueltas
 {
     int random = (rand() % 100) + 1;
     if (random <= caballo_que_corre.suerte)
@@ -196,6 +174,11 @@ while (caballo_que_corre.posicion_x != pos_llegada_x)
         mutex_caballo.lock();               //se bloquea acceso a las funciones para evitar que cada caballo intente imprimir en pantalla al mismo tiempo
         mover_caballo(caballo_que_corre);   // mueve Caballo
         wrefresh(pista);
+	if(caballo_que_corre.posicion_x==pos_llegada_x-1)//en cuanto cumpla la vuelta
+	{
+	    vueltas_corridas++;
+	    resetear_caballo(caballo_que_corre);//lo devuelve al inicio
+	}
         mutex_caballo.unlock();
     }
 std::this_thread::sleep_for(std::chrono::milliseconds(50));
@@ -217,3 +200,16 @@ void hipodromo:: limpiar_ganadores()
     ganadores.shrink_to_fit();//para evitar que quede memoria suelta por ahi
     return;
 }
+void hipodromo:: resetear_caballo(Caballo &caballo_reseteado)
+{
+	mvwprintw(pista,caballo_reseteado.posicion_y,caballo_reseteado.posicion_x," ");//borra caballo que llego para mandarlo al inicio
+        caballo_reseteado.posicion_x = 1;//devuelve caballo al inicio
+	mvwprintw(pista,caballo_reseteado.posicion_y,caballo_reseteado.posicion_x,"%c",caballo_reseteado.caracter);    //Reimpresion de posicion de x
+	wrefresh(pista);
+}
+void hipodromo:: mod_vueltas(int vueltas){
+    if(vueltas ==0)//no permite que sean 0, no las cambia si se coloca
+	return;
+    vueltas_a_correr=vueltas;
+    return;
+};
