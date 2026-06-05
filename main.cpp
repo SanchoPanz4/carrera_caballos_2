@@ -270,7 +270,7 @@ void editar_suerte_caballos(hipodromo &hipo_)
             highlight = (highlight + 1) % 8;
             break;
         case 10:
-            if (highlight == 5){
+            if (highlight == 7){
                 delwin(menuwin);
                 return;
             }
