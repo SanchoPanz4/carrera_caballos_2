@@ -1,6 +1,7 @@
 #include <curses.h>
 #include <string>
 #include "carreras.hpp"
+#include <thread>
 
 using namespace std;
 
@@ -482,7 +483,7 @@ int altura_titulo = 10;//altura titulo se va a usar de referencia para coordenad
 		    {
 	    vueltas_carreras(hipo);
             hipo.carrera();
-            estado_carrera(hipo);
+            std::thread t1 (estado_carrera, hipo);
             //std::vector<Caballo> mostrar_ganadores= hipo.ganador();
             //wclear(resultado);
             //wrefresh(resultado);
