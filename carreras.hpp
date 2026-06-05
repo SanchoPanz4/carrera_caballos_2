@@ -1,6 +1,6 @@
 #include <curses.h>
 #include <mutex>
-
+#include <vector>
 class Caballo{
 
     public :
@@ -22,12 +22,13 @@ class hipodromo{
 	std::mutex mutex_caballo; //declaramos un mutex para evitar choques a la hora de mover el caballo
 	WINDOW *pista;
 	int pos_llegada_x;
-
+	std::mutex mutex_ganadores; //mutex que va a servir para que los caballos vayan entrando de a uno al vector ganadores, el orden se mantiene
+	std::vector<Caballo> ganadores;//arreglo dinamico que va a guardar caballos
     public:
-	int gana;
+	
 	Caballo caballos[5];
 	hipodromo(int pos_y,int pos_x, Caballo caballos_ingreso[5]);//constructor, toma arreglo 5 caballos y posicion de hipodromo en pantalla
-	char ganador();
+	std::vector<Caballo> ganador();//devuelve el vector entero de ganadores
 
 	//modificar cantidad caballos
 	void mod_caballo_cantidad(int nuevo_n);
@@ -41,7 +42,7 @@ class hipodromo{
 	void carrera(); //contiene el loop de la carrera , al final ordena en orden de llegada a los caballos.
 	
 	void carrera_hilo(Caballo caballo_que_corre);
-
+	void limpiar_ganadores();
 
 	
 };

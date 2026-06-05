@@ -386,7 +386,7 @@ int altura_titulo = 10;//altura titulo se va a usar de referencia para coordenad
     string choices [4] = {"Competir", "Editar Caballo", "Editar Hipodromo", "Salir"};
     int choice;
     int highlight = 0;
-    WINDOW * resultado = newwin (5, 22, (altura_titulo+2+8)+2+15,5); // ventana que imprime resultado
+    WINDOW * resultado = newwin (10, 40, (altura_titulo+2+8)+2+15,5); // ventana que imprime resultado
     
 
     while(1){
@@ -413,20 +413,30 @@ int altura_titulo = 10;//altura titulo se va a usar de referencia para coordenad
         default:
             break;
         }
+	int g=1;//empezar a contar puestos caballos desde el 1
         if (choice == 10){
             switch (highlight){
                 case 0:
+		    {
                 hipo.carrera();
-               
-                mvwprintw(resultado,1,1,"Caballo Ganador: %c",hipo.ganador());
-                mvwprintw(resultado,2,1,"Suerte Ganador: %d",hipo.caballos[hipo.gana].suerte);
+
+		std::vector<Caballo> mostrar_ganadores= hipo.ganador();
+		for(Caballo caballo_puesto: mostrar_ganadores)//es como el foreach de c# 
+		{
+		    mvwprintw(resultado,g,1,"Caballo puesto %d: %c",g,caballo_puesto.caracter);
+		    g++;
+		}
+                //mvwprintw(resultado,1,1,"Caballo Ganador: %c",hipo.ganador());
+                //mvwprintw(resultado,2,1,"Suerte Ganador: %d",hipo.caballos[hipo.gana].suerte);
                 box(resultado,0,0);
                 wrefresh(resultado);
+		hipo.limpiar_ganadores();//limpia vector para la siguiente carrera
                 break;
+		    }
                 
-                case 1:
-                editar_caballos(hipo);
-                break;
+		case 1:
+		editar_caballos(hipo);
+		break;
                 
                 case 2:
                 editar_hipodromo(hipo);

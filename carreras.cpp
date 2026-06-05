@@ -28,9 +28,9 @@
         pos_llegada_x=getmaxx(pista)-2;//llegada por defecto es el anterior a llegar al borde
 
     };//constructor, toma arreglo 5 caballos y posicion de hipodromo en pantalla
-    char hipodromo::ganador(){
-        return caballos[gana].caracter;
-    }
+    std::vector<Caballo> hipodromo::ganador(){
+        return ganadores;
+    };
 	//modificar cantidad caballos
 	void hipodromo:: mod_caballo_cantidad(int nuevo_n){
         
@@ -188,5 +188,20 @@
             }
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
         }
+	//mutex para que accedan uno a la vez a arreglo de ganadores
+	//como es semaforo binario el orden se mantiene 
+	//porque tiene una fila
+	mutex_ganadores.lock();
+	ganadores.push_back(caballo_que_corre);
+	mutex_ganadores.unlock();
         return ;
     }
+
+void hipodromo:: limpiar_ganadores()
+{
+    //elimina los elementos
+    ganadores.clear();
+
+    ganadores.shrink_to_fit();//para evitar que quede memoria suelta por ahi
+    return;
+}
