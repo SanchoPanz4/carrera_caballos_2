@@ -431,8 +431,9 @@ int altura_titulo = 10;//altura titulo se va a usar de referencia para coordenad
                 //mvwprintw(resultado,1,1,"Caballo Ganador: %c",hipo.ganador());
                 //mvwprintw(resultado,2,1,"Suerte Ganador: %d",hipo.caballos[hipo.gana].suerte);
                 box(resultado,0,0);
+                hipo.limpiar_ganadores();//limpia vector para la siguiente carrera
                 wrefresh(resultado);
-		hipo.limpiar_ganadores();//limpia vector para la siguiente carrera
+                wclear(resultado);
                 break;
 		    }
                 
