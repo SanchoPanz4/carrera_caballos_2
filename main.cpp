@@ -243,7 +243,7 @@ void editar_suerte_caballos(hipodromo &hipo_)
 
         int ancho = getmaxx(menuwin);
 
-        for (int i = 0; i < 7; i++)//imprime numeros de suerte actual
+        for (int i = 0; i < 8; i++)//imprime numeros de suerte actual
         {
             string texto;
             if (i < 7)
@@ -263,11 +263,11 @@ void editar_suerte_caballos(hipodromo &hipo_)
         switch (choice)
         {
         case KEY_UP:
-            highlight = (highlight - 1 + 6) % 6;
+            highlight = (highlight - 1 + 8) % 8;
             break;
 
         case KEY_DOWN:
-            highlight = (highlight + 1) % 6;
+            highlight = (highlight + 1) % 8;
             break;
         case 10:
             if (highlight == 5){
