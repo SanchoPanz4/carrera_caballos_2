@@ -219,7 +219,7 @@ void editar_suerte_caballos(hipodromo &hipo_)
     int yMax, xMax;
     getmaxyx(stdscr, yMax, xMax);
 
-    WINDOW * menuwin = newwin(8, 30, 12, (xMax - 30) / 2);
+    WINDOW * menuwin = newwin(10, 30, 12, (xMax - 30) / 2);
     keypad(menuwin, true);
 
     string caballos[8] = {
