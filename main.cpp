@@ -374,7 +374,8 @@ void vueltas_carreras(hipodromo &hipo_){
 }
 
 void estado_carrera (hipodromo &hipo_) {
-    WINDOW * resultado = newwin(10, 40, (10+2+8)+2+15,5); // ventana que imprime resultado
+    WINDOW * resultado = newwin(10, 40, (10+2+8)+2+15,5); // ventana que imprime resultado 
+    int g=1;
     std::vector<Caballo> mostrar_ganadores= hipo_.ganador();
             wclear(resultado);
             wrefresh(resultado);
