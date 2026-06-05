@@ -220,7 +220,7 @@ void editar_suerte_caballos(hipodromo &hipo_)
     int yMax, xMax;
     getmaxyx(stdscr, yMax, xMax);
 
-    WINDOW * menuwin = newwin(8, 30, 12, (xMax - 30) / 2);
+    WINDOW * menuwin = newwin(10, 30, 12, (xMax - 30) / 2);
     keypad(menuwin, true);
 
     string caballos[8] = {
@@ -244,7 +244,7 @@ void editar_suerte_caballos(hipodromo &hipo_)
 
         int ancho = getmaxx(menuwin);
 
-        for (int i = 0; i < 7; i++)//imprime numeros de suerte actual
+        for (int i = 0; i < 8; i++)//imprime numeros de suerte actual
         {
             string texto;
             if (i < 7)
@@ -264,14 +264,14 @@ void editar_suerte_caballos(hipodromo &hipo_)
         switch (choice)
         {
         case KEY_UP:
-            highlight = (highlight - 1 + 6) % 6;
+            highlight = (highlight - 1 + 8) % 8;
             break;
 
         case KEY_DOWN:
-            highlight = (highlight + 1) % 6;
+            highlight = (highlight + 1) % 8;
             break;
         case 10:
-            if (highlight == 5){
+            if (highlight == 7){
                 delwin(menuwin);
                 return;
             }
