@@ -214,25 +214,22 @@ void editar_cantidad_caballos(hipodromo &hipo_)
 
 void editar_suerte_caballos(hipodromo &hipo_)
 {
-    //clear();
     box(stdscr, 0, 0);
 
     int yMax, xMax;
     getmaxyx(stdscr, yMax, xMax);
 
-    //mvprintw(2, (xMax - 26) / 2, "SELECCIONAR Caballo");
-
     WINDOW * menuwin = newwin(8, 30, 12, (xMax - 30) / 2);
     keypad(menuwin, true);
 
-    //static int suerte [5] = {50,50,50,50,50};
-
-    string caballos[6] = {
+    string caballos[8] = {
         "Caballo 1",
         "Caballo 2",
         "Caballo 3",
         "Caballo 4",
         "Caballo 5",
+        "Caballo 6",
+        "Caballo 7",
         "Volver"
     };
 
@@ -246,10 +243,10 @@ void editar_suerte_caballos(hipodromo &hipo_)
 
         int ancho = getmaxx(menuwin);
 
-        for (int i = 0; i < 6; i++)//imprime numeros de suerte actual
+        for (int i = 0; i < 7; i++)//imprime numeros de suerte actual
         {
             string texto;
-            if (i < 5)
+            if (i < 7)
                 texto = caballos[i] + " (" + to_string(hipo_.caballos[i].suerte) + ")";
             else
                 texto = caballos[i];
@@ -287,13 +284,10 @@ void editar_suerte_caballos(hipodromo &hipo_)
 
 void editar_valor_suerte(int Caballo,hipodromo &hipo_)
 {
-    //clear();
     box(stdscr, 0, 0);
 
     int yMax, xMax;
     getmaxyx(stdscr, yMax, xMax);
-
-    //mvprintw(2, (xMax - 22) / 2, "EDITAR SUERTE");
 
     WINDOW * menuwin = newwin(8, 40, 12, (xMax - 40) / 2);
     keypad(menuwin, true);
