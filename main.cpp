@@ -434,6 +434,7 @@ int altura_titulo = 10;//altura titulo se va a usar de referencia para coordenad
                 hipo.limpiar_ganadores();//limpia vector para la siguiente carrera
                 wrefresh(resultado);
                 wclear(resultado);
+                wrefresh(resultado);
                 break;
 		    }
                 
