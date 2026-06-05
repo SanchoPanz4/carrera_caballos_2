@@ -10,6 +10,7 @@ void editar_largo_pista(int &largo_pista,hipodromo &hipo_);
 void editar_cantidad_caballos(hipodromo &hipo_);
 void editar_suerte_caballos(hipodromo &hipo_);
 void editar_valor_suerte(int Caballo, hipodromo &hipo_);
+void vueltas_carreras(hipodromo &hipo_, int vueltas);
 
 void editar_hipodromo(hipodromo &hipo_)
 {
@@ -331,6 +332,53 @@ void editar_valor_suerte(int Caballo,hipodromo &hipo_)
     }
 }
 
+void vueltas_carreras(hipodromo &hipo_){
+
+    //clear();
+    box(stdscr, 0, 0);
+
+    int yMax, xMax;
+    getmaxyx(stdscr, yMax, xMax);
+
+
+    WINDOW * menuwin = newwin(8, 40, 12, (xMax - 40) / 2);
+    keypad(menuwin, true);
+
+    int vueltas = 1;//por defecto la vuelta es 1
+    int choice;
+
+    while (1)
+    {
+        werase(menuwin);
+        box(menuwin, 0, 0);
+
+        string texto2 = "Vueltas a correr: " + to_string(vueltas);
+
+        mvwprintw(menuwin, 4, (40 - texto2.length()) / 2, texto2.c_str());
+
+        wrefresh(menuwin);
+        choice = wgetch(menuwin);
+
+        switch (choice)
+        {
+        case KEY_LEFT:
+            if (vueltas > 1) vueltas--;
+            break;
+
+        case KEY_RIGHT:
+            if (vueltas < 100) vueltas++;
+            break;
+
+        case 10:
+            hipo_.mod_vueltas(vueltas); //se guardan vueltas
+            return; //corre carrera
+        }
+    }
+
+
+
+}
+
 int main()
 {
     initscr();               //iniciar curses
@@ -420,6 +468,7 @@ int altura_titulo = 10;//altura titulo se va a usar de referencia para coordenad
             switch (highlight){
             case 0:
 		    {
+	    vueltas_carreras(hipo);
             hipo.carrera();
             std::vector<Caballo> mostrar_ganadores= hipo.ganador();
             wclear(resultado);

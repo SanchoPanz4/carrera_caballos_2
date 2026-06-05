@@ -19,6 +19,8 @@
         largo_x=10;
         largo_y=n_caballos*2+1;
 
+        largo_y=11;
+	    vueltas_a_correr=1;
         pos_x=pos_x_ingreso;
         pos_y=pos_y_ingreso;
         
@@ -162,8 +164,8 @@ void hipodromo::carrera()
 void hipodromo::carrera_hilo(Caballo caballo_que_corre)
 {
 srand(time(NULL) * (int)caballo_que_corre.caracter); // Valor semilla sea distinto por cada caballo
-    
-while (caballo_que_corre.posicion_x != pos_llegada_x)
+    int vueltas_corridas=0;
+while (vueltas_corridas< vueltas_a_correr)//mientras no haya cumplido las vueltas
 {
     int random = (rand() % 100) + 1;
     if (random <= caballo_que_corre.suerte)
@@ -172,6 +174,11 @@ while (caballo_que_corre.posicion_x != pos_llegada_x)
         mutex_caballo.lock();               //se bloquea acceso a las funciones para evitar que cada caballo intente imprimir en pantalla al mismo tiempo
         mover_caballo(caballo_que_corre);   // mueve Caballo
         wrefresh(pista);
+	if(caballo_que_corre.posicion_x==pos_llegada_x-1)//en cuanto cumpla la vuelta
+	{
+	    vueltas_corridas++;
+	    resetear_caballo(caballo_que_corre);//lo devuelve al inicio
+	}
         mutex_caballo.unlock();
     }
 std::this_thread::sleep_for(std::chrono::milliseconds(50));
@@ -193,3 +200,16 @@ void hipodromo:: limpiar_ganadores()
     ganadores.shrink_to_fit();//para evitar que quede memoria suelta por ahi
     return;
 }
+void hipodromo:: resetear_caballo(Caballo &caballo_reseteado)
+{
+	mvwprintw(pista,caballo_reseteado.posicion_y,caballo_reseteado.posicion_x," ");//borra caballo que llego para mandarlo al inicio
+        caballo_reseteado.posicion_x = 1;//devuelve caballo al inicio
+	mvwprintw(pista,caballo_reseteado.posicion_y,caballo_reseteado.posicion_x,"%c",caballo_reseteado.caracter);    //Reimpresion de posicion de x
+	wrefresh(pista);
+}
+void hipodromo:: mod_vueltas(int vueltas){
+    if(vueltas ==0)//no permite que sean 0, no las cambia si se coloca
+	return;
+    vueltas_a_correr=vueltas;
+    return;
+};
