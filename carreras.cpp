@@ -119,7 +119,7 @@
 
 
     // comenzar carrera
-void hipodromo::carrera() {
+void hipodromo::carrera()
 {
     wclear(pista);
     box(pista,0,0);
@@ -153,32 +153,6 @@ void hipodromo::carrera() {
         {   
             threads.at(i).join();
         }
-    }
-    
-    //Threads de cada caballo
-    // std::thread t1(&hipodromo::carrera_hilo,this,caballos[0]); //constructor es: (funcion que va a andar, objeto en el que va andar, argumentos)
-    // std::thread t2(&hipodromo::carrera_hilo,this,caballos[1]); //constructor es: (funcion que va a andar, objeto en el que va andar, argumentos)
-    // std::thread t3(&hipodromo::carrera_hilo,this,caballos[2]); //constructor es: (funcion que va a andar, objeto en el que va andar, argumentos)
-    // std::thread t4(&hipodromo::carrera_hilo,this,caballos[3]); //constructor es: (funcion que va a andar, objeto en el que va andar, argumentos)
-    // std::thread t5(&hipodromo::carrera_hilo,this,caballos[4]); //constructor es: (funcion que va a andar, objeto en el que va andar, argumentos)
-    // std::thread t6(&hipodromo::carrera_hilo,this,caballos[5]); //constructor es: (funcion que va a andar, objeto en el que va andar, argumentos)
-    // std::thread t7(&hipodromo::carrera_hilo,this,caballos[6]); //constructor es: (funcion que va a andar, objeto en el que va andar, argumentos)
-
-   //no salir de la carrera hasta que todos los caballos terminen de correr
-    // if(t1.joinable())
-    //         t1.join();
-    // if(t2.joinable())
-    //         t2.join();
-    // if(t3.joinable())
-    //         t3.join();
-    // if(t4.joinable())
-    //         t4.join();
-    // if(t5.joinable())
-    //         t5.join();
-    // if(t6.joinable())
-    //         t6.join();
-    // if(t7.joinable())
-    //         t7.join();
     }
 };
 
