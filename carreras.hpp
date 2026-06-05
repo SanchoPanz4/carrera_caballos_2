@@ -8,6 +8,7 @@ class Caballo{
     int posicion_x;
 	int posicion_y;
     int suerte;
+	int metros_recorridos;
     char caracter;
 };
 
