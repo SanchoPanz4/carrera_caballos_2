@@ -96,6 +96,8 @@ void editar_largo_pista(int &largo_pista,hipodromo &hipo_)
         mvwprintw(menuwin, 2, (50 - texto.length()) / 2, texto.c_str());
         texto="Presione <E> para salir";
         mvwprintw(menuwin, 3, (50 - texto.length()) / 2, texto.c_str());
+        texto="Largo pista"+to_string(valor);
+        mvwprintw(menuwin, 4, (50 - texto.length()) / 2, texto.c_str());
         wrefresh(menuwin);
         hipo_.mod_largo();
         
