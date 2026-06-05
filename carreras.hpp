@@ -33,7 +33,7 @@ class hipodromo{
 	//modificar cantidad caballos
 	void mod_caballo_cantidad(int nuevo_n);
 	//modificar tamaño pista
-	void mod_largo();
+	int mod_largo();
 	void add_largo();//llamar solo cuando se quiera añadir 1 espacio horizontal
 	void quitar_largo();//llamar solo cuando se quiera quitar 1 espacio horizontal
 

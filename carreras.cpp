@@ -42,7 +42,7 @@
     };
 	//modificar tamaño pista
     
-	void hipodromo:: mod_largo(){
+	int hipodromo:: mod_largo(){
         
         keypad(pista,true);//activa flechas para largo
         bool loop = true;
@@ -68,6 +68,7 @@
         }
         }
         keypad(pista,false);//desactiva flechas pista
+        return largo_x;
     };
     void hipodromo::add_largo() {
         
