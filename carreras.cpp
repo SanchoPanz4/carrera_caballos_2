@@ -114,7 +114,6 @@
     void hipodromo::mover_caballo(Caballo caballo_que_se_mueve) {
     mvwprintw(pista,caballo_que_se_mueve.posicion_y,caballo_que_se_mueve.posicion_x,"%c",caballo_que_se_mueve.caracter);    //Reimpresion de posicion de x
     mvwprintw(pista,caballo_que_se_mueve.posicion_y,caballo_que_se_mueve.posicion_x-1," ");  //borrado de paso de x por la pista
-
     };
 
 
@@ -193,6 +192,7 @@ while (caballo_que_corre.posicion_x != pos_llegada_x)
     if (random <= caballo_que_corre.suerte)
     {
         caballo_que_corre.posicion_x++;     // Actualizacion de posicion Caballo x
+        caballo_que_corre.metros_recorridos++;
         mutex_caballo.lock();               //se bloquea acceso a las funciones para evitar que cada caballo intente imprimir en pantalla al mismo tiempo
         mover_caballo(caballo_que_corre);   // mueve Caballo
         wrefresh(pista);

@@ -378,6 +378,7 @@ int altura_titulo = 10;//altura titulo se va a usar de referencia para coordenad
         arreglo_caballos[i].posicion_x = 1;
         arreglo_caballos[i].posicion_y = i*2+1;
         arreglo_caballos[i].suerte = 50;
+        arreglo_caballos[i].metros_recorridos = 0;
     }
     hipodromo hipo((altura_titulo+2+8)+2,5,arreglo_caballos);
     
