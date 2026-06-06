@@ -51,23 +51,27 @@
         bool loop = true;
         while(loop)
         {
+            std::string texto;
+	    //imprime en la ventana para que el numero cambie
+	    texto="Largo pista "+ std::to_string(largo_x - 18);
+	    mvwprintw(menuwin, 4, (50 - texto.length()) / 2, texto.c_str());
+	    wrefresh(menuwin);
             int input=(int)wgetch(pista);
 
-            std::string texto;
-            switch (input)
+	    switch (input)
             {
                 case KEY_LEFT:
-                texto="Largo pista "+ std::to_string(largo_x - 18);
-                 mvwprintw(menuwin, 4, (50 - texto.length()) / 2, texto.c_str());
-                 wrefresh(menuwin);
                     quitar_largo(); // quita un largo
-                    break;
+		    texto="Largo pista "+ std::to_string(largo_x - 18);
+		    mvwprintw(menuwin, 4, (50 - texto.length()) / 2, texto.c_str());
+		    wrefresh(menuwin);
+		    break;
 
                 case KEY_RIGHT:
-                texto="Largo pista "+ std::to_string(largo_x - 18);
-                 mvwprintw(menuwin, 4, (50 - texto.length()) / 2, texto.c_str());
-                 wrefresh(menuwin);
                     add_largo();
+		    texto="Largo pista "+ std::to_string(largo_x - 18);
+		    mvwprintw(menuwin, 4, (50 - texto.length()) / 2, texto.c_str());
+		    wrefresh(menuwin);
                     break; // añade un largo
 
                 case 'E'://valor ascii E
@@ -186,7 +190,7 @@ while (caballo_que_corre.vueltas_realizadas <= vueltas_a_correr)//mientras no ha
         mutex_caballo.lock();               //se bloquea acceso a las funciones para evitar que cada caballo intente imprimir en pantalla al mismo tiempo
         mover_caballo(caballo_que_corre);   // mueve Caballo
         wrefresh(pista);
-	if(caballo_que_corre.posicion_x==pos_llegada_x-1)//en cuanto cumpla la vuelta
+	if(caballo_que_corre.posicion_x==pos_llegada_x)//en cuanto cumpla la vuelta
 	{
 	    caballo_que_corre.vueltas_realizadas++;
 	    resetear_caballo(caballo_que_corre);//lo devuelve al inicio
