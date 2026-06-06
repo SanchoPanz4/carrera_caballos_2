@@ -112,8 +112,7 @@
 
          
 
-        int min_x_pantalla=30;
-        //largo minimo 30
+        int min_x_pantalla=49; //largo minimo de pista 30 + lo que quita los numeros
         if(largo_x-min_x_pantalla>=0)//si es negativo es  menor al minimo
         {
             mvwvline(pista,0,largo_x-1,' ',getmaxy(pista));//imprime espacios blancos donde estaba el borde
