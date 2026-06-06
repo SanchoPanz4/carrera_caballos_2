@@ -193,7 +193,7 @@ void editar_cantidad_caballos(hipodromo &hipo_)
             highlight = (highlight - 1 + 6) % 6;
             break;
         case KEY_DOWN:
-            highlight = (highlight + 6) % 6;
+            highlight = (highlight + 1) % 6;
             break;
         case 10:
             hipo_.mod_caballo_cantidad(opciones[highlight]) ;//toma cantidad seleccionada
