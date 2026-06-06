@@ -117,7 +117,7 @@
     void hipodromo::mover_caballo(Caballo caballo_que_se_mueve) {
     mvwprintw(pista,caballo_que_se_mueve.posicion_y,caballo_que_se_mueve.posicion_x,"%c",caballo_que_se_mueve.caracter);    //Reimpresion de posicion de x
     mvwprintw(pista,caballo_que_se_mueve.posicion_y,caballo_que_se_mueve.posicion_x-1," ");  //borrado de paso de x por la pista
-    mvwprintw(pista,caballo_que_se_mueve.posicion_y, 1, "%4dm", caballo_que_se_mueve.metros_recorridos);
+    mvwprintw(pista,caballo_que_se_mueve.posicion_y, 1, "%4dm V:%2d |", caballo_que_se_mueve.metros_recorridos, caballo_que_se_mueve.vueltas_realizadas);
     };
 
 
@@ -131,7 +131,7 @@ void hipodromo::carrera()
     //Imprime los caballos en su posicion inicial
     for(int i=0;i<n_caballos;i++)
     {
-        caballos[i].posicion_x = 1 + 10; //+10 es para el desplazamiento
+        caballos[i].posicion_x = 1 + 15; //+15 es para el desplazamiento por el texto con informacion
         caballos[i].metros_recorridos = 0;
     }
 
@@ -140,7 +140,7 @@ void hipodromo::carrera()
     //Imprime lineas de pista
     for(int i=2;i<largo_y;i=i+2)
     {
-        for(int j=10;j<largo_x-1;j++)
+        for(int j=15;j<largo_x-1;j++) //int j=15 es por el desplazamiento debido al texto con info
         {
             mvwprintw(pista,i,j,"-");
         }
@@ -204,7 +204,7 @@ void hipodromo:: limpiar_ganadores()
 void hipodromo:: resetear_caballo(Caballo &caballo_reseteado)
 {
 	mvwprintw(pista,caballo_reseteado.posicion_y,caballo_reseteado.posicion_x," ");//borra caballo que llego para mandarlo al inicio
-        caballo_reseteado.posicion_x = 1;//devuelve caballo al inicio
+        caballo_reseteado.posicion_x = 15;//devuelve caballo al inicio
 	mvwprintw(pista,caballo_reseteado.posicion_y,caballo_reseteado.posicion_x,"%c",caballo_reseteado.caracter);    //Reimpresion de posicion de x
 	wrefresh(pista);
 }
