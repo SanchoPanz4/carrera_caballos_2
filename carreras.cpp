@@ -256,3 +256,8 @@ void hipodromo:: mod_vueltas(int vueltas){
     vueltas_a_correr=vueltas;
     return;
 };
+int hipodromo::get_largo_pista(){
+    int largo= this->largo_x-18;
+    return largo;//18 es el tamaño que se le da a los metros+vuelta
+
+}

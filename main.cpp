@@ -455,16 +455,19 @@ int altura_titulo = 10;//altura titulo se va a usar de referencia para coordenad
             case 0:
 		    {
 	    vueltas_carreras(hipo);//pide las vueltas a realizar en la carrera
-            hipo.carrera();//ejecuta la carrera
-            std::vector<Caballo> mostrar_ganadores= hipo.ganador();
             wclear(resultado);
             wrefresh(resultado);
+	    int largo_pista=hipo.get_largo_pista();
+	    mvwprintw(resultado,1,1,"Largo pista actual: %d",largo_pista);
+            box(resultado,0,0);
+            wrefresh(resultado);
+            hipo.carrera();//ejecuta la carrera
+            std::vector<Caballo> mostrar_ganadores= hipo.ganador();
             for(Caballo caballo_puesto: mostrar_ganadores)//es como el foreach de c# 
             {
-                mvwprintw(resultado,g,1,"Caballo puesto %d: %c",g,caballo_puesto.caracter);
+                mvwprintw(resultado,g+1,1,"Caballo puesto %d: %c",g,caballo_puesto.caracter);
                 g++;
             }
-            box(resultado,0,0);
             wrefresh(resultado);
             hipo.limpiar_ganadores();//limpia vector para la siguiente carrera
             break;
