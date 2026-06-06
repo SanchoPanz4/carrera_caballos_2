@@ -211,7 +211,7 @@ while (caballo_que_corre.vueltas_realizadas <= vueltas_a_correr)//mientras no ha
 	    caballo_que_corre.metros_recorridos--;						  
 
 	    resetear_caballo(caballo_que_corre);//lo devuelve al inicio
-	    mvwprintw(pista,15, 1, "%4dm V:%2d |",sumatoria_metros - (1 * n_caballos * caballo_que_corre.vueltas_realizadas),sumatoria_vueltas);//imprime actualizacion
+	    mvwprintw(pista,15, 1, "%4dm V:%2d |",sumatoria_metros,sumatoria_vueltas);//imprime actualizacion
 	    wrefresh(pista);
 	}
         mutex_caballo.unlock();
