@@ -110,16 +110,12 @@ void editar_largo_pista(int &largo_pista,hipodromo &hipo_)
 
 void editar_caballos(hipodromo &hipo_)
 {
-    //clear();
     box(stdscr, 0, 0);
 
     int yMax, xMax;
     getmaxyx(stdscr, yMax, xMax);
-
-    //mvprintw(2, (xMax - 20) / 2, "EDITAR CABALLOS");
-
  
-    WINDOW * menuwin = newwin (8, xMax-10, 12, 5);  
+    WINDOW * menuwin = newwin (10, xMax-10, 12, 5);  
     box(menuwin, 0, 0);
 
     string choices[3] = {"Cantidad de caballos","Suerte de caballos","Volver"};
