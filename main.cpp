@@ -414,7 +414,7 @@ int altura_titulo = 10;//altura titulo se va a usar de referencia para coordenad
         arreglo_caballos[i].metros_recorridos = 0;
     }
     
-    hipodromo hipo((altura_titulo+2+8)+2,10,arreglo_caballos);
+    hipodromo hipo((altura_titulo+2+8)+2,5,arreglo_caballos);
     
 
     keypad(menuwin, true);   // habilitar flechas
@@ -423,7 +423,7 @@ int altura_titulo = 10;//altura titulo se va a usar de referencia para coordenad
     string choices [4] = {"Competir", "Editar Caballo", "Editar Hipodromo", "Salir"};
     int choice;
     int highlight = 0;
-    WINDOW * estado_carrera = newwin(10, 100, (altura_titulo+2+8)+2+15,5); // ventana que imprime resultado
+    WINDOW * resultado = newwin(8, 30, (altura_titulo+2+8)+2+15+2,5); // ventana que imprime resultado
     
     while(1){
         box(menuwin,0,0);
@@ -454,18 +454,18 @@ int altura_titulo = 10;//altura titulo se va a usar de referencia para coordenad
             switch (highlight){
             case 0:
 		    {
-	    vueltas_carreras(hipo);
-            hipo.carrera();
+	    vueltas_carreras(hipo);//pide las vueltas a realizar en la carrera
+            hipo.carrera();//ejecuta la carrera
             std::vector<Caballo> mostrar_ganadores= hipo.ganador();
-            wclear(estado_carrera);
-            wrefresh(estado_carrera);
+            wclear(resultado);
+            wrefresh(resultado);
             for(Caballo caballo_puesto: mostrar_ganadores)//es como el foreach de c# 
             {
-                mvwprintw(estado_carrera,g,50,"Caballo puesto %d: %c",g,caballo_puesto.caracter);
+                mvwprintw(resultado,g,1,"Caballo puesto %d: %c",g,caballo_puesto.caracter);
                 g++;
             }
-            box(estado_carrera,0,0);
-            wrefresh(estado_carrera);
+            box(resultado,0,0);
+            wrefresh(resultado);
             hipo.limpiar_ganadores();//limpia vector para la siguiente carrera
             break;
             }

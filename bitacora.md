@@ -30,7 +30,8 @@
 ## 03/06 
 - Se arreglo problema de hilos con un  mutex para que accedan a las funciones de impresion de ncurses una a la vez y evitar corrupcion
 ## 04/06
-- Implementado nueva forma de decidir ganadores considerando hilos por caballo
+- Implementado nueva forma de decidir ganadores considerando que cada caballo es un hilo
 ## 05/06
 - Se implementa vueltas, su contador y los metros que han corrido los caballos 
 - Se ajusta maximo de caballos de 5 a 7
+- Se implementa que se muestren metros largo de pista al cambiarla

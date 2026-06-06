@@ -8,7 +8,7 @@
 #include <cstdlib>          //Uso de Rand
 #include <ctime>
 #include <thread> //uso de thread de c++ en vez de pthreads para mejor compatibilidad con las clases 
-#include <chrono>
+#include <chrono>//para los sleep en las threads
 #include <string>
 
 
@@ -18,7 +18,7 @@
         
         //valores minimos x e y
         largo_x=48; //largo minimo 30 + 18 espacio para info
-        largo_y=n_caballos*2+1;
+        largo_y=(n_caballos+1)*2+1;//dos espacios por caballo mas el espacio para la sumatoria
 
 	    vueltas_a_correr=1;
         pos_x=pos_x_ingreso;
@@ -142,7 +142,7 @@ void hipodromo::carrera()
     wclear(pista);
     box(pista,0,0);
     wrefresh(pista);
-    std::vector<std::thread> threads;
+    std::vector<std::thread> threads;//se va a usar un vector para threads para elegir dinamicamente cuantas se inician
     //Imprime los caballos en su posicion inicial
     for(int i=0;i<n_caballos;i++)
     {
@@ -153,7 +153,7 @@ void hipodromo::carrera()
     noecho(); //No retorno al pulsar tecla
 
     //Imprime lineas de pista
-    for(int i=2;i<largo_y;i=i+2)
+    for(int i=2;i<largo_y-2;i=i+2)
     {
         for(int j=15;j<largo_x-1;j++) //int j=15 es por el desplazamiento debido al texto con info
         {
@@ -161,16 +161,19 @@ void hipodromo::carrera()
         }
     }
     wrefresh(pista);
-    threads.reserve(7);
+    threads.reserve(7);//se guarda espacio para max 7 caballos
     for (int i = 0; i < n_caballos; i++)
     {
-        threads.push_back(std::thread(&hipodromo::carrera_hilo,this,caballos[i]));
+        threads.push_back(std::thread(&hipodromo::carrera_hilo,this,caballos[i])); // se le añade threads declarandolas con el constructor
+										   // la forma del constructor es
+										   // thread(funcion,objeto donde corre, argumentos de la funcion)
+										   // ahora cada thread corre con la funcion carrera_hilo y con el caballo i
     }
     for (int i = 0; i < n_caballos; i++)
     {
-        if(threads.at(i).joinable())
+        if(threads.at(i).joinable())//revisamos que se puedan unir con joinable en todas las threads
         {   
-            threads.at(i).join();
+            threads.at(i).join();//si se pueden unir es porque estan andando y esperamos que terminen para seguir el programa
         }
     }
 };
@@ -179,14 +182,14 @@ void hipodromo::carrera()
 void hipodromo::carrera_hilo(Caballo caballo_que_corre)
 {
 srand(time(NULL) * (int)caballo_que_corre.caracter); // Valor semilla sea distinto por cada caballo
-caballo_que_corre.vueltas_realizadas=1;
+caballo_que_corre.vueltas_realizadas=1;//vueltas comienzan desde 1
 while (caballo_que_corre.vueltas_realizadas <= vueltas_a_correr)//mientras no haya cumplido las vueltas
 {
     int random = (rand() % 100) + 1;
     if (random <= caballo_que_corre.suerte)
     {
         caballo_que_corre.posicion_x++;     // Actualizacion de posicion Caballo x
-        caballo_que_corre.metros_recorridos++;
+        caballo_que_corre.metros_recorridos++;//caballo corre 1 metro
         mutex_caballo.lock();               //se bloquea acceso a las funciones para evitar que cada caballo intente imprimir en pantalla al mismo tiempo
         mover_caballo(caballo_que_corre);   // mueve Caballo
         wrefresh(pista);
@@ -206,6 +209,11 @@ mutex_ganadores.lock();
 ganadores.push_back(caballo_que_corre);
 mutex_ganadores.unlock();
     return ;
+}
+
+void hipodromo::sumatoria_caballos(){
+
+
 }
 
 void hipodromo:: limpiar_ganadores()
