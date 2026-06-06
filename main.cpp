@@ -423,7 +423,7 @@ int altura_titulo = 10;//altura titulo se va a usar de referencia para coordenad
     string choices [4] = {"Competir", "Editar Caballo", "Editar Hipodromo", "Salir"};
     int choice;
     int highlight = 0;
-    WINDOW * resultado = newwin(8, 30, (altura_titulo+2+8)+2+15+2,5); // ventana que imprime resultado
+    WINDOW * resultado = newwin(10, 30, (altura_titulo+2+8)+2+15+2,5); // ventana que imprime resultado
     
     while(1){
         box(menuwin,0,0);
