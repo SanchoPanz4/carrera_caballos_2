@@ -207,8 +207,8 @@ while (caballo_que_corre.vueltas_realizadas <= vueltas_a_correr)//mientras no ha
 	    sumatoria_vueltas++;//se suma vuelta hecha
 
 	    //compensan adicion extra de un metro al hacer mas de una vuelta
-	    sumatoria_metros--;
-	    //caballo_que_corre.metros_recorridos--;						  
+	    //sumatoria_metros--;
+	    caballo_que_corre.metros_recorridos--;						  
 
 	    resetear_caballo(caballo_que_corre);//lo devuelve al inicio
 	    mvwprintw(pista,15, 1, "%4dm V:%2d |",sumatoria_metros,sumatoria_vueltas);//imprime actualizacion
