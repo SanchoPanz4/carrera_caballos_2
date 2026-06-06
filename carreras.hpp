@@ -43,4 +43,5 @@ class hipodromo{
 	void limpiar_ganadores();
 	void resetear_caballo(Caballo &caballo_reseteado);//resetea caballo a inicio
 	void mod_vueltas(int vueltas);//modifica las vueltas a realizar
+	int get_largo_pista();
 };
