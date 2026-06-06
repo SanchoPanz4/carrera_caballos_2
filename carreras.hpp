@@ -26,6 +26,8 @@ class hipodromo{
 	std::mutex mutex_ganadores; 	//mutex que va a servir para que los caballos vayan entrando de a uno al vector ganadores, el orden se mantiene
 	std::vector<Caballo> ganadores;	//arreglo dinamico que va a guardar caballos
 	int vueltas_a_correr;//deben ser mayor igual a 1
+	int sumatoria_metros;
+	int sumatoria_vueltas;
 	public:
 	Caballo caballos[7];
 	hipodromo(int pos_y,int pos_x, Caballo caballos_ingreso[7]);	//constructor, toma arreglo 7 caballos y posicion de hipodromo en pantalla
@@ -35,11 +37,10 @@ class hipodromo{
 	int mod_largo(WINDOW *menuwin);						//modificar tamaño pista
 	void add_largo();						//llamar solo cuando se quiera añadir 1 espacio horizontal
 	void quitar_largo();					//llamar solo cuando se quiera quitar 1 espacio horizontal
-	void mover_caballo(Caballo caballo_que_se_mueve);
+	void mover_caballo(Caballo &caballo_que_se_mueve);
 	void carrera(); 	//comenzar carrera, contiene el loop de la carrera , al final ordena en orden de llegada a los caballos.
 	void carrera_hilo(Caballo caballo_que_corre);
 	void limpiar_ganadores();
 	void resetear_caballo(Caballo &caballo_reseteado);//resetea caballo a inicio
 	void mod_vueltas(int vueltas);//modifica las vueltas a realizar
-	void sumatoria_caballos();
 };

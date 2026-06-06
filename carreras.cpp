@@ -34,6 +34,9 @@
         }
         
         pos_llegada_x=getmaxx(pista)-2;//llegada por defecto es el anterior a llegar al borde
+	sumatoria_metros=0;
+	sumatoria_vueltas=0;
+
 
     };//constructor, toma arreglo 7 caballos y posicion de hipodromo en pantalla
     std::vector<Caballo> hipodromo::ganador(){
@@ -128,7 +131,10 @@
 
     }; // llamar solo cuando se quiera quitar 1 espacio horizontal
 
-    void hipodromo::mover_caballo(Caballo caballo_que_se_mueve) {
+    void hipodromo::mover_caballo(Caballo &caballo_que_se_mueve) {
+
+        caballo_que_se_mueve.posicion_x++;     // Actualizacion de posicion Caballo x
+
     mvwprintw(pista,caballo_que_se_mueve.posicion_y,caballo_que_se_mueve.posicion_x,"%c",caballo_que_se_mueve.caracter);    //Reimpresion de posicion de x
     mvwprintw(pista,caballo_que_se_mueve.posicion_y,caballo_que_se_mueve.posicion_x-1," ");  //borrado de paso de x por la pista
     mvwprintw(pista,caballo_que_se_mueve.posicion_y, 1, "%4dm V:%2d |", caballo_que_se_mueve.metros_recorridos, caballo_que_se_mueve.vueltas_realizadas);
@@ -138,6 +144,8 @@
     // comenzar carrera
 void hipodromo::carrera()
 {
+    sumatoria_metros=0;//setea a 0 sumatorias para empezar
+    sumatoria_vueltas=0;
     wclear(pista);
     box(pista,0,0);
     wrefresh(pista);
@@ -187,15 +195,24 @@ while (caballo_que_corre.vueltas_realizadas <= vueltas_a_correr)//mientras no ha
     int random = (rand() % 100) + 1;
     if (random <= caballo_que_corre.suerte)
     {
-        caballo_que_corre.posicion_x++;     // Actualizacion de posicion Caballo x
-        caballo_que_corre.metros_recorridos++;//caballo corre 1 metro
         mutex_caballo.lock();               //se bloquea acceso a las funciones para evitar que cada caballo intente imprimir en pantalla al mismo tiempo
+	sumatoria_metros++;//se le añade el metro recorrido
+        caballo_que_corre.metros_recorridos++;//caballo corre 1 metro
         mover_caballo(caballo_que_corre);   // mueve Caballo
+	mvwprintw(pista,15, 1, "%4dm V:%2d |",sumatoria_metros,sumatoria_vueltas);//imprime actualizacion
         wrefresh(pista);
 	if(caballo_que_corre.posicion_x==pos_llegada_x)//en cuanto cumpla la vuelta
 	{
 	    caballo_que_corre.vueltas_realizadas++;
+	    sumatoria_vueltas++;//se suma vuelta hecha
+
+	    //compensan adicion extra de un metro al hacer mas de una vuelta
+	    sumatoria_metros--;
+	    //caballo_que_corre.metros_recorridos--;						  
+
 	    resetear_caballo(caballo_que_corre);//lo devuelve al inicio
+	    mvwprintw(pista,15, 1, "%4dm V:%2d |",sumatoria_metros,sumatoria_vueltas);//imprime actualizacion
+	    wrefresh(pista);
 	}
         mutex_caballo.unlock();
     }
@@ -210,10 +227,6 @@ mutex_ganadores.unlock();
     return ;
 }
 
-void hipodromo::sumatoria_caballos(){
-
-
-}
 
 void hipodromo:: limpiar_ganadores()
 {
