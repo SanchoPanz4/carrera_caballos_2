@@ -17,7 +17,7 @@
         n_caballos=7;//comienza con 7 por defecto
         
         //valores minimos x e y
-        largo_x=30;
+        largo_x=48; //largo minimo 30 + 18 espacio para info
         largo_y=n_caballos*2+1;
 
 	    vueltas_a_correr=1;
@@ -57,14 +57,14 @@
             switch (input)
             {
                 case KEY_LEFT:
-                texto="Largo pista "+ std::to_string(largo_x);
+                texto="Largo pista "+ std::to_string(largo_x - 18);
                  mvwprintw(menuwin, 4, (50 - texto.length()) / 2, texto.c_str());
                  wrefresh(menuwin);
                     quitar_largo(); // quita un largo
                     break;
 
                 case KEY_RIGHT:
-                texto="Largo pista "+ std::to_string(largo_x);
+                texto="Largo pista "+ std::to_string(largo_x - 18);
                  mvwprintw(menuwin, 4, (50 - texto.length()) / 2, texto.c_str());
                  wrefresh(menuwin);
                     add_largo();
