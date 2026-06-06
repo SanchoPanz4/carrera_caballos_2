@@ -96,10 +96,9 @@ void editar_largo_pista(int &largo_pista,hipodromo &hipo_)
         mvwprintw(menuwin, 2, (50 - texto.length()) / 2, texto.c_str());
         texto="Presione <E> para salir";
         mvwprintw(menuwin, 3, (50 - texto.length()) / 2, texto.c_str());
-        texto="Largo pista "+to_string(valor);
-        mvwprintw(menuwin, 4, (50 - texto.length()) / 2, texto.c_str());
-        wrefresh(menuwin);
-        valor = hipo_.mod_largo();
+
+        
+        valor = hipo_.mod_largo(menuwin);
         
         wrefresh(menuwin);
         delwin(menuwin);
@@ -415,7 +414,7 @@ int altura_titulo = 10;//altura titulo se va a usar de referencia para coordenad
         arreglo_caballos[i].metros_recorridos = 0;
     }
     
-    hipodromo hipo((altura_titulo+2+8)+2,5,arreglo_caballos);
+    hipodromo hipo((altura_titulo+2+8)+2,30,arreglo_caballos);
     
 
     keypad(menuwin, true);   // habilitar flechas

@@ -32,7 +32,7 @@ class hipodromo{
 	std::vector<Caballo> ganador();									//devuelve el vector entero de ganadores
 
 	void mod_caballo_cantidad(int nuevo_n);	//modificar cantidad caballos
-	int mod_largo();						//modificar tamaño pista
+	int mod_largo(WINDOW *menuwin);						//modificar tamaño pista
 	void add_largo();						//llamar solo cuando se quiera añadir 1 espacio horizontal
 	void quitar_largo();					//llamar solo cuando se quiera quitar 1 espacio horizontal
 	void mover_caballo(Caballo caballo_que_se_mueve);

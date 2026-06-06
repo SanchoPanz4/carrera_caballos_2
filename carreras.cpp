@@ -9,6 +9,7 @@
 #include <ctime>
 #include <thread> //uso de thread de c++ en vez de pthreads para mejor compatibilidad con las clases 
 #include <chrono>
+#include <string>
 
 
 	hipodromo::hipodromo(int pos_y_ingreso,int pos_x_ingreso, Caballo caballos_ingreso[7])
@@ -44,21 +45,31 @@
     };
 	//modificar tamaño pista
     
-	int hipodromo:: mod_largo(){
+	int hipodromo:: mod_largo(WINDOW *menuwin){
         
         keypad(pista,true);//activa flechas para largo
         bool loop = true;
         while(loop)
         {
             int input=(int)wgetch(pista);
+
+            std::string texto;
             switch (input)
             {
                 case KEY_LEFT:
+                texto="Largo pista "+ std::to_string(largo_x);
+                 mvwprintw(menuwin, 4, (50 - texto.length()) / 2, texto.c_str());
+                 wrefresh(menuwin);
                     quitar_largo(); // quita un largo
                     break;
+
                 case KEY_RIGHT:
+                texto="Largo pista "+ std::to_string(largo_x);
+                 mvwprintw(menuwin, 4, (50 - texto.length()) / 2, texto.c_str());
+                 wrefresh(menuwin);
                     add_largo();
                     break; // añade un largo
+
                 case 'E'://valor ascii E
                     loop = false;
                     break;
@@ -97,8 +108,8 @@
 
          
 
-        int min_x_pantalla=10;
-        //largo minimo 10
+        int min_x_pantalla=30;
+        //largo minimo 30
         if(largo_x-min_x_pantalla>=0)//si es negativo es  menor al minimo
         {
             mvwvline(pista,0,largo_x-1,' ',getmaxy(pista));//imprime espacios blancos donde estaba el borde
@@ -164,8 +175,8 @@ void hipodromo::carrera()
 void hipodromo::carrera_hilo(Caballo caballo_que_corre)
 {
 srand(time(NULL) * (int)caballo_que_corre.caracter); // Valor semilla sea distinto por cada caballo
-caballo_que_corre.vueltas_realizadas=0;
-while (caballo_que_corre.vueltas_realizadas< vueltas_a_correr)//mientras no haya cumplido las vueltas
+caballo_que_corre.vueltas_realizadas=1;
+while (caballo_que_corre.vueltas_realizadas <= vueltas_a_correr)//mientras no haya cumplido las vueltas
 {
     int random = (rand() % 100) + 1;
     if (random <= caballo_que_corre.suerte)
