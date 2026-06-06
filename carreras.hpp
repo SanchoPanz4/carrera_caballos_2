@@ -35,7 +35,7 @@ class hipodromo{
 	void add_largo();						//llamar solo cuando se quiera añadir 1 espacio horizontal
 	void quitar_largo();					//llamar solo cuando se quiera quitar 1 espacio horizontal
 	void mover_caballo(Caballo caballo_que_se_mueve);
-	void carrera(WINDOW &estado_carrera); 	//comenzar carrera, contiene el loop de la carrera , al final ordena en orden de llegada a los caballos.
+	void carrera(); 	//comenzar carrera, contiene el loop de la carrera , al final ordena en orden de llegada a los caballos.
 	void carrera_hilo(Caballo caballo_que_corre);
 	void limpiar_ganadores();
 	void resetear_caballo(Caballo &caballo_reseteado);//resetea caballo a inicio

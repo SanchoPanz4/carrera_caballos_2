@@ -122,7 +122,7 @@
 
 
     // comenzar carrera
-void hipodromo::carrera(WINDOW &estado_carrera)
+void hipodromo::carrera()
 {
     wclear(pista);
     box(pista,0,0);
