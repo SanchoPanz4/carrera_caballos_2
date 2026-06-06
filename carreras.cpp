@@ -17,7 +17,7 @@
         n_caballos=7;//comienza con 7 por defecto
         
         //valores minimos x e y
-        largo_x=10;
+        largo_x=30;
         largo_y=n_caballos*2+1;
 
 	    vueltas_a_correr=1;

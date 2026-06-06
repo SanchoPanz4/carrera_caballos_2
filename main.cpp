@@ -414,7 +414,7 @@ int altura_titulo = 10;//altura titulo se va a usar de referencia para coordenad
         arreglo_caballos[i].metros_recorridos = 0;
     }
     
-    hipodromo hipo((altura_titulo+2+8)+2,30,arreglo_caballos);
+    hipodromo hipo((altura_titulo+2+8)+2,10,arreglo_caballos);
     
 
     keypad(menuwin, true);   // habilitar flechas
