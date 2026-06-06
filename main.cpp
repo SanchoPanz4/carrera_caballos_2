@@ -21,7 +21,7 @@ void editar_hipodromo(hipodromo &hipo_)
     getmaxyx(stdscr, yMax, xMax);
 
     int ancho = 50;
-    WINDOW * menuwin = newwin(8, xMax-10 , 12, 5);
+    WINDOW * menuwin = newwin(10, xMax-10 , 12, 5);
     box(menuwin, 0, 0);
 
     string choices[2] = {"Editar largo de pista","Volver"};
@@ -81,7 +81,7 @@ void editar_largo_pista(int &largo_pista,hipodromo &hipo_)
 
     //mvprintw(2, (xMax - 22) / 2, "EDITAR LARGO PISTA");
 
-    WINDOW *menuwin = newwin(8, 50, 12, (xMax - 50) / 2);
+    WINDOW *menuwin = newwin(10, 50, 12, (xMax - 50) / 2);
     keypad(menuwin, true);
 
     int valor = largo_pista;
