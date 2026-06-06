@@ -110,16 +110,12 @@ void editar_largo_pista(int &largo_pista,hipodromo &hipo_)
 
 void editar_caballos(hipodromo &hipo_)
 {
-    //clear();
     box(stdscr, 0, 0);
 
     int yMax, xMax;
     getmaxyx(stdscr, yMax, xMax);
-
-    //mvprintw(2, (xMax - 20) / 2, "EDITAR CABALLOS");
-
  
-    WINDOW * menuwin = newwin (8, xMax-10, 12, 5);  
+    WINDOW * menuwin = newwin (10, xMax-10, 12, 5);  
     box(menuwin, 0, 0);
 
     string choices[3] = {"Cantidad de caballos","Suerte de caballos","Volver"};
@@ -163,27 +159,22 @@ void editar_caballos(hipodromo &hipo_)
 
 void editar_cantidad_caballos(hipodromo &hipo_)
 {
-    //clear();
     box(stdscr, 0, 0);
 
     int yMax, xMax;
     getmaxyx(stdscr, yMax, xMax);
 
-    //mvprintw(2, (xMax - 28) / 2, "CANTIDAD DE CABALLOS");
-
-    WINDOW * menuwin = newwin(8, 30, 12, (xMax - 30) / 2);
+    WINDOW * menuwin = newwin(10, 30, 12, (xMax - 30) / 2);
     keypad(menuwin, true);
 
-    int opciones[4] = {2, 3, 4, 5};
+    int opciones[6] = {2, 3, 4, 5, 6 ,7};
     int highlight = 0;
     int choice;
 
     while (1)
     {
-        //werase(menuwin);
         box(menuwin, 0, 0);
-
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 6; i++)
         {
             string texto = to_string(opciones[i]);
             int x = (30 - texto.length()) / 2;
@@ -199,10 +190,10 @@ void editar_cantidad_caballos(hipodromo &hipo_)
         switch (choice)
         {
         case KEY_UP:
-            highlight = (highlight - 1 + 4) % 4;
+            highlight = (highlight - 1 + 6) % 6;
             break;
         case KEY_DOWN:
-            highlight = (highlight + 1) % 4;
+            highlight = (highlight + 1) % 6;
             break;
         case 10:
             hipo_.mod_caballo_cantidad(opciones[highlight]) ;//toma cantidad seleccionada
@@ -408,7 +399,7 @@ int altura_titulo = 10;//altura titulo se va a usar de referencia para coordenad
     attroff(A_BOLD);
 
     //crear ventana
-    WINDOW * menuwin = newwin (8, xMax-10, altura_titulo + 2 , 5); // (altura, ancho, coordY, coordX)
+    WINDOW * menuwin = newwin (10, xMax-10, altura_titulo + 2 , 5); // (altura, ancho, coordY, coordX)
     box (menuwin ,0,0);
     refresh();
     wrefresh(menuwin);
