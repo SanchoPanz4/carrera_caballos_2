@@ -272,7 +272,6 @@ void editar_suerte_caballos(hipodromo &hipo_)
             break;
         case 10:
             if (highlight == 7){
-                wclear(menuwin);
                 delwin(menuwin);
                 return;
             }

@@ -117,11 +117,12 @@
     void hipodromo::mover_caballo(Caballo caballo_que_se_mueve) {
     mvwprintw(pista,caballo_que_se_mueve.posicion_y,caballo_que_se_mueve.posicion_x,"%c",caballo_que_se_mueve.caracter);    //Reimpresion de posicion de x
     mvwprintw(pista,caballo_que_se_mueve.posicion_y,caballo_que_se_mueve.posicion_x-1," ");  //borrado de paso de x por la pista
+    mvwprintw(pista,caballo_que_se_mueve.posicion_y, 1, "%4dm", caballo_que_se_mueve.metros_recorridos);
     };
 
 
     // comenzar carrera
-void hipodromo::carrera()
+void hipodromo::carrera(WINDOW &estado_carrera)
 {
     wclear(pista);
     box(pista,0,0);
@@ -130,7 +131,8 @@ void hipodromo::carrera()
     //Imprime los caballos en su posicion inicial
     for(int i=0;i<n_caballos;i++)
     {
-        caballos[i].posicion_x = 1;
+        caballos[i].posicion_x = 1 + 10; //+10 es para el desplazamiento
+        caballos[i].metros_recorridos = 0;
     }
 
     noecho(); //No retorno al pulsar tecla
@@ -138,7 +140,7 @@ void hipodromo::carrera()
     //Imprime lineas de pista
     for(int i=2;i<largo_y;i=i+2)
     {
-        for(int j=1;j<largo_x-1;j++)
+        for(int j=10;j<largo_x-1;j++)
         {
             mvwprintw(pista,i,j,"-");
         }
