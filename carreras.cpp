@@ -164,8 +164,8 @@ void hipodromo::carrera()
 void hipodromo::carrera_hilo(Caballo caballo_que_corre)
 {
 srand(time(NULL) * (int)caballo_que_corre.caracter); // Valor semilla sea distinto por cada caballo
-    int vueltas_corridas=0;
-while (vueltas_corridas< vueltas_a_correr)//mientras no haya cumplido las vueltas
+caballo_que_corre.vueltas_realizadas=0;
+while (caballo_que_corre.vueltas_realizadas< vueltas_a_correr)//mientras no haya cumplido las vueltas
 {
     int random = (rand() % 100) + 1;
     if (random <= caballo_que_corre.suerte)
@@ -177,7 +177,7 @@ while (vueltas_corridas< vueltas_a_correr)//mientras no haya cumplido las vuelta
         wrefresh(pista);
 	if(caballo_que_corre.posicion_x==pos_llegada_x-1)//en cuanto cumpla la vuelta
 	{
-	    vueltas_corridas++;
+	    caballo_que_corre.vueltas_realizadas++;
 	    resetear_caballo(caballo_que_corre);//lo devuelve al inicio
 	}
         mutex_caballo.unlock();
