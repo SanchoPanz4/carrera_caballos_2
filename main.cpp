@@ -375,7 +375,7 @@ int main()
     getmaxyx (stdscr, yMax, xMax);
     box(stdscr, 0, 0);
     
-    //TITULO
+    //TITULO DE ALTO 10 ESPACIOS
     string titulo[] = {
 "  ____    _    ____  ____  _____ ____    _    ",
 " / ___|  / \\  |  _ \\|  _ \\| ____|  _ \\  / \\   ",
